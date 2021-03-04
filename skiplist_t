@@ -49,6 +49,7 @@ private:
 	Node* Listhead; // 跳躍表頭節點
 	int level; // 跳躍表的層數
 	int nodeSum; // 跳躍表的結點個數
+	int rank[level];
 };
 
 static unsigned int seed = NULL; // 隨機
@@ -72,6 +73,7 @@ template<typename T>
 /* 插入元素 */
 void SkipList<T>::insert(const T& val)
 {
+	
 	Node* curNode = Listhead;
 	/* 向下走到最底層Level 1 */
 	while (curNode->_down != nullptr)
@@ -93,7 +95,9 @@ void SkipList<T>::insert(const T& val)
 
 			curNode->_right = newNode;
 			newNode->_left = curNode; // 更新新節點的left
-
+			
+			rank[nodeSum-2]=newNode->_data;
+			rank[nodeSum-1]=curNode->_data;
 			break;
 		}
 		/* 待插入元素等於表中節點值，不進行插入 */
